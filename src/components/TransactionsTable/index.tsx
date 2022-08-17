@@ -1,35 +1,25 @@
-import { useCallback, useEffect, useState } from 'react';
 import { Container } from './styles';
 
 import { FaTrash } from 'react-icons/fa';
-import { toast } from 'react-toastify';
-import { api } from '../../services/api';
+import { useTransactions } from '../../hooks/useTransactions';
 
-interface Transaction {
-    id: number;
-    title: string;
-    amount: number;
-    type: string;
-    category: string;
-    createdAt: string;
-}
+// interface TransactionsProps {
+//     id: number;
+// }
 
 export function TransactionsTable() {
-    // const [repositories, setRepositories] = useState([]);
+    const { transactions }  = useTransactions();
 
-    // const handleDelete = useCallback((repo) => {
-    //     const find = repositories.filter(r => r.name !== repo);
-    //     setRepositories(find);
-    //     toast.success("Transação deletaa com sucesso!")
-    // })
+    // const [deleteTransaction, setDeleteTransaction] = useState(transactions);
 
-    const [transactions, setTransactions] = useState<Transaction[]>([]);
-
-    useEffect(() => {
-        api.get('transactions')
-            .then(response => setTransactions(response.data.transactions))
-
-    }, []);
+    // const handleDelete = useCallback(
+    //     (transaction: TransactionsProps) => {
+    //         const find = transactions.filter((t) => t.id !== transaction);
+    //         setDeleteTransaction(find)
+    //     },
+    //     [transactions]
+    // )
+    
 
     return (
         <Container>
@@ -59,6 +49,7 @@ export function TransactionsTable() {
                                     new Date(transaction.createdAt)
                                 )}
                             </td>
+                            <td><FaTrash color="var(--red)" /></td>
                         </tr>
                     ))}
                 </tbody>
